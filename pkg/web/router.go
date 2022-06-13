@@ -10,8 +10,11 @@ func RunHttp() {
 	//路由组
 	appInfoGroup := r.Group("/")
 	{
-		appInfoGroup.GET("/add/:key", controller.AddNumByKey)
-		appInfoGroup.GET("/find/:key", controller.FindNumByKey)
+		appInfoGroup.POST("/add/:key", controller.NewNumInfoControllerImpl().AddNumByKey)
+		appInfoGroup.GET("/find/:key", controller.NewNumInfoControllerImpl().FindNumByKey)
+		appInfoGroup.POST("/saveInfo", controller.NewNumInfoControllerImpl().SaveNumInfo)
+		appInfoGroup.POST("/deleteInfo/:id", controller.NewNumInfoControllerImpl().DeleteById)
+		appInfoGroup.GET("/getAll", controller.NewNumInfoControllerImpl().FindAll)
 	}
 	r.Run("127.0.0.1:8888")
 }

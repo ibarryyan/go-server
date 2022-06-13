@@ -1,24 +1,53 @@
 package controller
 
 import (
-	"context"
 	"count_num/pkg/dao/impl"
-	"count_num/pkg/entity"
+	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
-func AddNumByKey(c *gin.Context) {
+type NumInfoControllerImpl struct {
+	dao *impl.CountNumDAOImpl
+}
+
+type NumInfoController interface {
+	AddNumByKey(c *gin.Context)
+	FindNumByKey(c *gin.Context)
+	SaveNumInfo(c *gin.Context)
+	DeleteById(c *gin.Context)
+	FindAll(c *gin.Context)
+}
+
+func NewNumInfoControllerImpl() *NumInfoControllerImpl {
+	return &NumInfoControllerImpl{dao: impl.NewCountNumDAOImpl()}
+}
+
+func (impl NumInfoControllerImpl) AddNumByKey(c *gin.Context) {
 	key := c.Param("key")
-	daoImpl := impl.NewCountNumDAOImpl()
-	info := daoImpl.GetNumInfoByKey(context.Background(), key)
-	info = entity.NumInfo{info.Id, info.Name, info.InfoKey, info.InfoNum + 1}
-	daoImpl.UpdateNumInfoByKey(context.Background(), info)
+	fmt.Println(impl.dao)
 	c.JSON(200, key)
 }
 
-func FindNumByKey(c *gin.Context) {
+func (impl NumInfoControllerImpl) FindNumByKey(c *gin.Context) {
 	key := c.Param("key")
-	daoImpl := impl.NewCountNumDAOImpl()
-	infoByKey := daoImpl.GetNumInfoByKey(context.Background(), key)
-	c.JSON(200, infoByKey)
+
+	c.JSON(200, key)
+}
+
+func (impl NumInfoControllerImpl) SaveNumInfo(c *gin.Context) {
+	key := c.Param("key")
+
+	c.JSON(200, key)
+}
+
+func (impl NumInfoControllerImpl) DeleteById(c *gin.Context) {
+	key := c.Param("key")
+
+	c.JSON(200, key)
+}
+
+func (impl NumInfoControllerImpl) FindAll(c *gin.Context) {
+	key := c.Param("key")
+
+	c.JSON(200, key)
 }
