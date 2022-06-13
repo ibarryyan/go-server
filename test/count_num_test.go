@@ -11,19 +11,22 @@ import (
 
 func TestCreate(t *testing.T) {
 	daoImpl := impl.NewCountNumDAOImpl()
-	info := entity.NumInfo{Num: 22, Key: "123", Name: "zs",Id: 2}
-	daoImpl.AddNumInfo(context.Background(),info)
+	info := entity.NumInfo{InfoNum: 22, InfoKey: "123", Name: "123", Id: 3}
+	daoImpl.AddNumInfo(context.Background(), info)
 	fmt.Println(config.DB)
 }
 
 func TestFindByKey(t *testing.T) {
 	daoImpl := impl.NewCountNumDAOImpl()
-	daoImpl.GetNumInfoByKey(context.Background(),"ymx")
+	key := daoImpl.GetNumInfoByKey(context.Background(), "ymx")
+	fmt.Println(key)
 }
 
 func TestUpdate(t *testing.T) {
 	daoImpl := impl.NewCountNumDAOImpl()
-	daoImpl.UpdateNumInfoByKey(context.Background(),entity.NumInfo{Key: "ymx",Num: 2223})
+	daoImpl.UpdateNumInfoByKey(context.Background(), entity.NumInfo{Id: 1, InfoKey: "ymx", InfoNum: 22121223})
 }
 
-
+func TestDelete(t *testing.T) {
+	impl.NewCountNumDAOImpl().DeleteNumInfoById(context.Background(), 1)
+}

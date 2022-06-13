@@ -14,4 +14,6 @@ type CountNumDAO interface {
 	FindAllNumInfo(ctx context.Context) []entity.NumInfo
 	//根据Key修改
 	UpdateNumInfoByKey(ctx context.Context, info entity.NumInfo) bool
+	//删除一个
+	DeleteNumInfoById(ctx context.Context, id int64) bool
 }

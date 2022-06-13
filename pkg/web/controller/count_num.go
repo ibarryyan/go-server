@@ -11,7 +11,7 @@ func AddNumByKey(c *gin.Context) {
 	key := c.Param("key")
 	daoImpl := impl.NewCountNumDAOImpl()
 	info := daoImpl.GetNumInfoByKey(context.Background(), key)
-	info = entity.NumInfo{info.Id, info.Name, info.Key, info.Num + 1}
+	info = entity.NumInfo{info.Id, info.Name, info.InfoKey, info.InfoNum + 1}
 	daoImpl.UpdateNumInfoByKey(context.Background(), info)
 	c.JSON(200, key)
 }
