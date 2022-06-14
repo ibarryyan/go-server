@@ -1,10 +1,12 @@
 package controller
 
 import (
+	"bytes"
 	"count_num/pkg/dao/impl"
 	"count_num/pkg/entity"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/cast"
 	"io/ioutil"
 	"strconv"
 )
@@ -20,6 +22,7 @@ type NumInfoController interface {
 	DeleteById(c *gin.Context)
 	FindAll(c *gin.Context)
 	FindNumById(c *gin.Context)
+	Update(context *gin.Context)
 }
 
 func NewNumInfoControllerImpl() *NumInfoControllerImpl {
@@ -69,4 +72,24 @@ func (impl NumInfoControllerImpl) FindNumById(c *gin.Context) {
 	i, _ := strconv.Atoi(id)
 	numInfo := impl.dao.GetNumInfoById(c, int64(i))
 	c.JSON(200, map[string]interface{}{"code": 0, "msg": "", "count": 0, "data": numInfo})
+}
+
+func (impl NumInfoControllerImpl) Update(c *gin.Context) {
+	body := c.Request.Body
+	jsonBytes, err := ioutil.ReadAll(body)
+	d := json.NewDecoder(bytes.NewReader(jsonBytes))
+	d.UseNumber()
+	m := make(map[string]string)
+	d.Decode(&m)
+	if err != nil {
+		panic(err)
+	}
+	info := entity.NumInfo{
+		Id:      cast.ToInt64(m["id"]),
+		Name:    m["name"],
+		InfoKey: m["info_key"],
+		InfoNum: cast.ToInt64(m["info_num"]),
+	}
+	isOk := impl.dao.UpdateNumInfoById(c, info)
+	c.JSON(200, map[string]interface{}{"code": 0, "msg": "", "count": 0, "data": isOk})
 }

@@ -47,3 +47,8 @@ func (impl CountNumDAOImpl) GetNumInfoById(ctx context.Context, id int64) entity
 	impl.db.First(&info, "id", id)
 	return info
 }
+
+func (impl CountNumDAOImpl) UpdateNumInfoById(ctx context.Context, info entity.NumInfo) bool {
+	impl.db.Model(&entity.NumInfo{}).Where("id", info.Id).Updates(entity.NumInfo{Name: info.Name, InfoKey: info.InfoKey, InfoNum: info.InfoNum})
+	return true
+}

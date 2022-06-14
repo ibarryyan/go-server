@@ -22,6 +22,7 @@ func RunHttp() {
 		appInfoGroup.POST("/saveInfo", controller.NewNumInfoControllerImpl().SaveNumInfo)
 		appInfoGroup.POST("/deleteInfo/:id", controller.NewNumInfoControllerImpl().DeleteById)
 		appInfoGroup.GET("/getAll", controller.NewNumInfoControllerImpl().FindAll)
+		appInfoGroup.POST("/update", controller.NewNumInfoControllerImpl().Update)
 	}
 	r.Run("127.0.0.1:" + config.PORT)
 }
