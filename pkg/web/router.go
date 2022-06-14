@@ -2,11 +2,14 @@ package web
 
 import (
 	"count_num/pkg/web/controller"
+	"count_num/pkg/web/interceptor"
 	"github.com/gin-gonic/gin"
 )
 
 func RunHttp() {
 	r := gin.Default()
+	//增加拦截器
+	r.Use(interceptor.HttpInterceptor())
 	//路由组
 	appInfoGroup := r.Group("/")
 	{
