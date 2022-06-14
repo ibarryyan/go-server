@@ -11,7 +11,7 @@ import (
 
 func TestCreate(t *testing.T) {
 	daoImpl := impl.NewCountNumDAOImpl()
-	info := entity.NumInfo{InfoNum: 22, InfoKey: "123", Name: "123", Id: 3}
+	info := entity.NumInfo{InfoNum: 22, InfoKey: "2", Name: "4"}
 	daoImpl.AddNumInfo(context.Background(), info)
 	fmt.Println(config.DB)
 }

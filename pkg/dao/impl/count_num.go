@@ -16,7 +16,7 @@ func NewCountNumDAOImpl() *CountNumDAOImpl {
 }
 
 func (impl CountNumDAOImpl) AddNumInfo(ctx context.Context, info entity.NumInfo) bool {
-	impl.db.Save(info)
+	impl.db.Save(&info) //要使用指针
 	return true
 }
 
