@@ -41,3 +41,9 @@ func (impl CountNumDAOImpl) DeleteNumInfoById(ctx context.Context, id int64) boo
 	impl.db.Delete(&entity.NumInfo{}, id)
 	return true
 }
+
+func (impl CountNumDAOImpl) GetNumInfoById(ctx context.Context, id int64) entity.NumInfo {
+	var info entity.NumInfo
+	impl.db.First(&info, "id", id)
+	return info
+}

@@ -18,7 +18,7 @@ func TestCreate(t *testing.T) {
 
 func TestFindByKey(t *testing.T) {
 	daoImpl := impl.NewCountNumDAOImpl()
-	key := daoImpl.GetNumInfoByKey(context.Background(), "ymx")
+	key := daoImpl.GetNumInfoByKey(context.Background(), "123")
 	fmt.Println(key)
 }
 

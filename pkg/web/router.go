@@ -1,6 +1,7 @@
 package web
 
 import (
+	"count_num/pkg/config"
 	"count_num/pkg/web/controller"
 	"count_num/pkg/web/interceptor"
 	"github.com/gin-gonic/gin"
@@ -11,15 +12,16 @@ func RunHttp() {
 	//增加拦截器
 	r.Use(interceptor.HttpInterceptor())
 	//解决跨域
-	r.Use(interceptor.CORSConfig())
+	r.Use(config.CorsConfig())
 	//路由组
 	appInfoGroup := r.Group("/")
 	{
 		appInfoGroup.POST("/add/:key", controller.NewNumInfoControllerImpl().AddNumByKey)
-		appInfoGroup.GET("/find/:key", controller.NewNumInfoControllerImpl().FindNumByKey)
+		appInfoGroup.GET("/findByKey/:key", controller.NewNumInfoControllerImpl().FindNumByKey)
+		appInfoGroup.GET("/findById/:id", controller.NewNumInfoControllerImpl().FindNumById)
 		appInfoGroup.POST("/saveInfo", controller.NewNumInfoControllerImpl().SaveNumInfo)
 		appInfoGroup.POST("/deleteInfo/:id", controller.NewNumInfoControllerImpl().DeleteById)
 		appInfoGroup.GET("/getAll", controller.NewNumInfoControllerImpl().FindAll)
 	}
-	r.Run("127.0.0.1:8888")
+	r.Run("127.0.0.1:" + config.PORT)
 }

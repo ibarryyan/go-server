@@ -19,6 +19,7 @@ type NumInfoController interface {
 	SaveNumInfo(c *gin.Context)
 	DeleteById(c *gin.Context)
 	FindAll(c *gin.Context)
+	FindNumById(c *gin.Context)
 }
 
 func NewNumInfoControllerImpl() *NumInfoControllerImpl {
@@ -61,4 +62,11 @@ func (impl NumInfoControllerImpl) DeleteById(c *gin.Context) {
 func (impl NumInfoControllerImpl) FindAll(c *gin.Context) {
 	numInfos := impl.dao.FindAllNumInfo(c)
 	c.JSON(200, map[string]interface{}{"code": 0, "msg": "", "count": len(numInfos), "data": numInfos})
+}
+
+func (impl NumInfoControllerImpl) FindNumById(c *gin.Context) {
+	id := c.Param("id")
+	i, _ := strconv.Atoi(id)
+	numInfo := impl.dao.GetNumInfoById(c, int64(i))
+	c.JSON(200, map[string]interface{}{"code": 0, "msg": "", "count": 0, "data": numInfo})
 }

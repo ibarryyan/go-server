@@ -1,11 +1,13 @@
-package interceptor
+package config
 
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
-func CORSConfig() gin.HandlerFunc {
+var PORT string
+
+func CorsConfig() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Header("Access-Control-Allow-Origin", "*") // 可将将 * 替换为指定的域名
 		c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
