@@ -10,6 +10,8 @@ func RunHttp() {
 	r := gin.Default()
 	//增加拦截器
 	r.Use(interceptor.HttpInterceptor())
+	//解决跨域
+	r.Use(interceptor.CORSConfig())
 	//路由组
 	appInfoGroup := r.Group("/")
 	{

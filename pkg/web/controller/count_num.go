@@ -60,5 +60,5 @@ func (impl NumInfoControllerImpl) DeleteById(c *gin.Context) {
 
 func (impl NumInfoControllerImpl) FindAll(c *gin.Context) {
 	numInfos := impl.dao.FindAllNumInfo(c)
-	c.JSON(200, numInfos)
+	c.JSON(200, map[string]interface{}{"code": 0, "msg": "", "count": 1000, "data": numInfos})
 }
