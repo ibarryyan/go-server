@@ -30,13 +30,13 @@ func (impl NumInfoControllerImpl) AddNumByKey(c *gin.Context) {
 	numInfo := impl.dao.GetNumInfoByKey(c, key)
 	numInfo.InfoNum = numInfo.InfoNum + 1
 	isOk := impl.dao.UpdateNumInfoByKey(c, numInfo)
-	c.JSON(200, isOk)
+	c.JSON(200, map[string]interface{}{"code": 0, "msg": "", "count": 0, "data": isOk})
 }
 
 func (impl NumInfoControllerImpl) FindNumByKey(c *gin.Context) {
 	key := c.Param("key")
 	numInfo := impl.dao.GetNumInfoByKey(c, key)
-	c.JSON(200, numInfo)
+	c.JSON(200, map[string]interface{}{"code": 0, "msg": "", "count": 0, "data": numInfo})
 }
 
 func (impl NumInfoControllerImpl) SaveNumInfo(c *gin.Context) {
@@ -48,17 +48,17 @@ func (impl NumInfoControllerImpl) SaveNumInfo(c *gin.Context) {
 		panic(err)
 	}
 	isOk := impl.dao.AddNumInfo(c, info)
-	c.JSON(200, isOk)
+	c.JSON(200, map[string]interface{}{"code": 0, "msg": "", "count": 0, "data": isOk})
 }
 
 func (impl NumInfoControllerImpl) DeleteById(c *gin.Context) {
 	id := c.Param("id")
 	i, _ := strconv.Atoi(id)
 	isOk := impl.dao.DeleteNumInfoById(c, int64(i))
-	c.JSON(200, isOk)
+	c.JSON(200, map[string]interface{}{"code": 0, "msg": "", "count": 0, "data": isOk})
 }
 
 func (impl NumInfoControllerImpl) FindAll(c *gin.Context) {
 	numInfos := impl.dao.FindAllNumInfo(c)
-	c.JSON(200, map[string]interface{}{"code": 0, "msg": "", "count": 1000, "data": numInfos})
+	c.JSON(200, map[string]interface{}{"code": 0, "msg": "", "count": len(numInfos), "data": numInfos})
 }
