@@ -1,0 +1,30 @@
+syntax = "proto3";  //指定语法格式
+package proto;  //指定生成的 xx.pb.go 的包名字；
+
+option go_package = "../proto"; //go语言下指定包的名称
+
+//service接口
+service NumInfoService {
+  //rpc接口中的方法
+  rpc GetNumInfoById(InfoRequest) returns (InfoResponse){}
+  rpc AddNumByKey(InfoRequest) returns (InfoResponse){}
+  rpc FindNumInfoByKey(InfoRequest) returns (InfoResponse){}
+  rpc SaveNumInfo(InfoRequest) returns (InfoResponse){}
+  rpc DeleteById(InfoRequest) returns (InfoResponse){}
+  rpc FindAll(InfoRequest) returns (InfoResponse){}
+}
+
+//请求的数据格式 message 对应生成的代码中的struct，[修饰符] 类型 字段名 = 标识符
+message InfoRequest{
+  int64 id = 1;
+  string name = 2 ;
+  string info_key = 3 ;
+  int64  info_num = 4;
+}
+
+message InfoResponse{
+  int64 code = 1;
+  string msg = 2;
+  int64 count = 3;
+  string data = 4;
+}
