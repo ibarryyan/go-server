@@ -20,7 +20,7 @@ func main() {
 	//3 调用grpc服务
 	req := new(proto.InfoRequest)
 	req.Id = 20
-	resp, err := client.GetNumInfoById(context.Background(), req)
+	resp, err := client.FindAll(context.Background(), req)
 	if err != nil {
 		log.Fatalf("请求错误 : %v\n", err)
 	}
