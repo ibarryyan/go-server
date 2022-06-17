@@ -1,7 +1,7 @@
-package main
+package grpc
 
 import "count_num/pkg/rpc"
 
-func main() {
+func Run() {
 	rpc.RunGRPC()
 }

@@ -1,7 +1,7 @@
-package main
+package web
 
 import "count_num/pkg/web"
 
-func main() {
+func Run() {
 	web.RunHttp()
 }
