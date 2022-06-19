@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-var rdb *redis.Client
+var RDB *redis.Client
 
 func init() {
 	var err error
@@ -27,7 +27,7 @@ func init() {
 	add := viper.GetString("redis.url")
 	pwd := viper.GetString("redis.password")
 	db := viper.GetInt("redis.db")
-	rdb = redis.NewClient(&redis.Options{
+	RDB = redis.NewClient(&redis.Options{
 		Addr:     add,
 		Password: pwd,
 		DB:       db,
