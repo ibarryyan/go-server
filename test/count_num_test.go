@@ -35,5 +35,6 @@ func TestDelete(t *testing.T) {
 
 func TestCache(t *testing.T) {
 	cacheDAOImpl := cache.NewCountNumCacheDAOImpl()
-	cacheDAOImpl.SetNumInfo(context.Background(), "1", entity.NumInfo{1, "zs", "12", 2}, time.Second*100)
+	cacheDAOImpl.SetNumInfo(context.Background(), "1", entity.NumInfo{1, "zs", "12", 2}, time.Second*1100)
+	cacheDAOImpl.GetNumInfoById(context.Background(), "1")
 }

@@ -4,7 +4,7 @@ import (
 	"context"
 	"count_num/pkg/config"
 	"count_num/pkg/entity"
-	"fmt"
+	"encoding/json"
 	"github.com/go-redis/redis/v8"
 	"time"
 )
@@ -16,10 +16,8 @@ type CountNumCacheDAOImpl struct {
 type CountNumCacheDAO interface {
 	// set一个
 	SetNumInfo(ctx context.Context, key string, info entity.NumInfo, t time.Duration) bool
-	// 查看全部
-	GetAllNumInfo(ctx context.Context) []entity.NumInfo
 	// 根据ID获取一个
-	GetNumInfoById(ctx context.Context, id int64) entity.NumInfo
+	GetNumInfoById(ctx context.Context, key string) entity.NumInfo
 }
 
 func NewCountNumCacheDAOImpl() *CountNumCacheDAOImpl {
@@ -28,14 +26,17 @@ func NewCountNumCacheDAOImpl() *CountNumCacheDAOImpl {
 
 func (impl CountNumCacheDAOImpl) SetNumInfo(ctx context.Context, key string, info entity.NumInfo, t time.Duration) bool {
 	res := impl.db.Set(ctx, key, info, t)
-	fmt.Println(res)
+	result, _ := res.Result()
+	if result != "OK" {
+		return false
+	}
 	return true
 }
 
-func (impl CountNumCacheDAOImpl) GetAllNumInfo(ctx context.Context) []entity.NumInfo {
-	return []entity.NumInfo{}
-}
-
-func (impl CountNumCacheDAOImpl) GetNumInfoById(ctx context.Context, id int64) entity.NumInfo {
-	return entity.NumInfo{}
+func (impl CountNumCacheDAOImpl) GetNumInfoById(ctx context.Context, key string) entity.NumInfo {
+	res := impl.db.Get(ctx, key)
+	var info entity.NumInfo
+	j := res.Val()
+	json.Unmarshal([]byte(j), &info)
+	return info
 }
