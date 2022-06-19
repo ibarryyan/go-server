@@ -2,11 +2,13 @@ package test
 
 import (
 	"context"
+	"count_num/pkg/cache"
 	"count_num/pkg/config"
 	"count_num/pkg/dao/impl"
 	"count_num/pkg/entity"
 	"fmt"
 	"testing"
+	"time"
 )
 
 func TestCreate(t *testing.T) {
@@ -29,4 +31,9 @@ func TestUpdate(t *testing.T) {
 
 func TestDelete(t *testing.T) {
 	impl.NewCountNumDAOImpl().DeleteNumInfoById(context.Background(), 1)
+}
+
+func TestCache(t *testing.T) {
+	cacheDAOImpl := cache.NewCountNumCacheDAOImpl()
+	cacheDAOImpl.SetNumInfo(context.Background(), "1", entity.NumInfo{1, "zs", "12", 2}, time.Second*100)
 }

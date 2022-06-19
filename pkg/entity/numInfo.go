@@ -21,3 +21,12 @@ func (info NumInfo) MarshalJSON() ([]byte, error) {
 		"info_num": info.InfoNum,
 	})
 }
+
+//Redis类似序列化操作
+func (info NumInfo) MarshalBinary() ([]byte, error) {
+	return json.Marshal(info)
+}
+
+func (info NumInfo) UnmarshalBinary(data []byte) error {
+	return json.Unmarshal(data, &info)
+}
