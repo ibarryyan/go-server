@@ -52,6 +52,7 @@ func (impl CountNumDAOImpl) UpdateNumInfoByKey(ctx context.Context, info entity.
 
 func (impl CountNumDAOImpl) DeleteNumInfoById(ctx context.Context, id int64) bool {
 	impl.db.Delete(&entity.NumInfo{}, id)
+	impl.cache.SetNumInfo(ctx, string(id), entity.NumInfo{}, cacheTime)
 	return true
 }
 
