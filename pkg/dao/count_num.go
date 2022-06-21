@@ -11,7 +11,7 @@ type CountNumDAO interface {
 	//根据Key获取一个
 	GetNumInfoByKey(ctx context.Context, url string) entity.NumInfo
 	//查看全部
-	FindAllNumInfo(ctx context.Context) []entity.NumInfo
+	FindAllNumInfo(ctx context.Context, page int, limit int) []entity.NumInfo
 	//根据Key修改
 	UpdateNumInfoByKey(ctx context.Context, info entity.NumInfo) bool
 	//删除一个

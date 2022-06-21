@@ -58,7 +58,7 @@ func (impl *NumInfoRPCImpl) DeleteById(ctx context.Context, request *proto.InfoR
 }
 
 func (impl *NumInfoRPCImpl) FindAll(ctx context.Context, request *proto.InfoRequest) (*proto.InfoResponse, error) {
-	numInfos := impl.dao.FindAllNumInfo(ctx)
+	numInfos := impl.dao.FindAllNumInfo(ctx, 0, 0)
 	infos, _ := json.Marshal(numInfos)
 	return &proto.InfoResponse{Code: 0, Msg: "", Count: 1, Data: string(infos)}, nil
 }

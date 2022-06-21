@@ -38,3 +38,8 @@ func TestCache(t *testing.T) {
 	cacheDAOImpl.SetNumInfo(context.Background(), "1", entity.NumInfo{1, "zs", "12", 2}, time.Second*1100)
 	cacheDAOImpl.GetNumInfoById(context.Background(), "1")
 }
+
+func TestFindByPage(t *testing.T) {
+	allNumInfo := impl.NewCountNumDAOImpl().FindAllNumInfo(context.Background(), 2, 10)
+	fmt.Println(allNumInfo)
+}
