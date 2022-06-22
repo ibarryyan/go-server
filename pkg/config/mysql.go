@@ -26,6 +26,10 @@ func init() {
 			fmt.Println("Find file but have err ...")
 		}
 	}
+	RedisUrl = viper.GetString("redis.url")
+	RedisPwd = viper.GetString("redis.password")
+	RedisDb = viper.GetInt("redis.db")
+	InitRedis()
 	PORT = viper.GetString("server.port")
 	url := viper.GetString("db.url")
 	db := viper.GetString("db.databases")
