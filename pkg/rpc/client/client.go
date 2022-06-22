@@ -8,6 +8,18 @@ import (
 	"log"
 )
 
+type NumInfoServiceClientImpl struct {
+	proto.NumInfoServiceClient
+}
+
+func NewNumInfoServiceClientImpl() *NumInfoServiceClientImpl {
+	conn, err := grpc.Dial(":6666", grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("正在监听服务端 : %v\n", err)
+	}
+	return &NumInfoServiceClientImpl{proto.NewNumInfoServiceClient(conn)}
+}
+
 func main() {
 	//1 配置grpc服务端的端口作为客户端的监听
 	conn, err := grpc.Dial(":6666", grpc.WithInsecure())
