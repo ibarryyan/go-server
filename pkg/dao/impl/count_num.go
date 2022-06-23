@@ -41,7 +41,7 @@ func (impl CountNumDAOImpl) GetNumInfoByKey(ctx context.Context, key string) ent
 
 func (impl CountNumDAOImpl) FindAllNumInfo(ctx context.Context, page int, limit int) []entity.NumInfo {
 	var infos []entity.NumInfo
-	if page == 0 && limit == 0 {
+	if page <= 0 || limit <= 0 {
 		impl.db.Find(&infos)
 	} else {
 		impl.db.Limit(limit).Offset((page - 1) * limit).Find(&infos)

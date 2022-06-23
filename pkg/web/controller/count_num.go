@@ -5,7 +5,6 @@ import (
 	"count_num/pkg/dao/impl"
 	"count_num/pkg/entity"
 	"encoding/json"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
 	"io/ioutil"
@@ -66,7 +65,6 @@ func (impl NumInfoControllerImpl) DeleteById(c *gin.Context) {
 func (impl NumInfoControllerImpl) FindAll(c *gin.Context) {
 	page := c.Query("page")
 	limit := c.Query("limit")
-	fmt.Println(page)
 	numInfos := impl.dao.FindAllNumInfo(c, cast.ToInt(page), cast.ToInt(limit))
 	c.JSON(200, map[string]interface{}{"code": 0, "msg": "", "count": len(numInfos), "data": numInfos})
 }
