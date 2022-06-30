@@ -6,7 +6,7 @@ type User struct {
 	Id         int64
 	Name       string
 	LoginName  string
-	Role       string
+	Role       int64
 	Pwd        string
 	CreateTime time.Time
 }
