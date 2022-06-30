@@ -3,10 +3,11 @@ module count_num
 go 1.16
 
 require (
-	github.com/casbin/casbin/v2 v2.48.0 // indirect
+	github.com/casbin/casbin/v2 v2.48.0
+	github.com/casbin/xorm-adapter/v2 v2.5.1
 	github.com/gin-gonic/gin v1.8.1
 	github.com/go-playground/validator/v10 v10.11.0 // indirect
-	github.com/go-redis/redis/v8 v8.11.5 // indirect
+	github.com/go-redis/redis/v8 v8.11.5
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.2 // indirect
