@@ -1,6 +1,9 @@
 package model
 
-import "time"
+import (
+	"encoding/json"
+	"time"
+)
 
 type User struct {
 	Id         int64     `json:"id"`
@@ -9,4 +12,19 @@ type User struct {
 	Role       int64     `json:"role"`
 	Pwd        string    `json:"pwd"`
 	CreateTime time.Time `json:"create_time"`
+}
+
+func (user User) TableName() string {
+	return "user_info"
+}
+
+func (user User) MarshalJSON() ([]byte, error) {
+	return json.Marshal(map[string]interface{}{
+		"id":          user.Id,
+		"name":        user.Name,
+		"login_name":  user.LoginName,
+		"role":        user.Role,
+		"pwd":         user.Pwd,
+		"create_time": user.CreateTime,
+	})
 }
