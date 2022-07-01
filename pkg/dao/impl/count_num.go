@@ -5,7 +5,6 @@ import (
 	"count_num/pkg/cache"
 	"count_num/pkg/config"
 	"count_num/pkg/entity"
-	"fmt"
 	"gorm.io/gorm"
 	"time"
 )
@@ -28,7 +27,6 @@ func (impl CountNumDAOImpl) AddNumInfo(ctx context.Context, info entity.NumInfo)
 		return false
 	}
 	impl.db.Save(&info) //要使用指针,Id可以回显
-	fmt.Println(info)
 	impl.cache.SetNumInfo(ctx, string(info.Id), info, cacheTime)
 	return true
 }

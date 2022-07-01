@@ -18,10 +18,17 @@ func NewRoleDaoImpl() *RoleDaoImpl {
 }
 
 func (impl *RoleDaoImpl) CreateRole(ctx context.Context, role model.Role) bool {
+	var r model.Role
+	impl.db.First(&r, "name", role.Name)
+	if r.Name == role.Name {
+		return false
+	}
+	impl.db.Save(&role)
 	return true
 }
 
 func (impl *RoleDaoImpl) GetRoleById(ctx context.Context, id int64) model.Role {
 	var role model.Role
+	impl.db.First(&role, "id", id)
 	return role
 }

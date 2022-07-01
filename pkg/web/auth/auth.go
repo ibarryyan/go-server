@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"github.com/casbin/casbin/v2"
 	"github.com/casbin/casbin/v2/model"
-	xormadapter "github.com/casbin/xorm-adapter/v2"
+	adapter "github.com/casbin/xorm-adapter/v2"
 	"log"
 )
 
 func Main() {
 	// 使用 MySQL 数据库初始化一个 Xorm 适配器
-	a, err := xormadapter.NewAdapter("mysql", "root:12345@tcp(127.0.0.1:3306)/go_app", true)
+	a, err := adapter.NewAdapter("mysql", "root:12345@tcp(127.0.0.1:3306)/go_app", true)
 	if err != nil {
 		log.Fatalf("error: adapter: %s", err)
 	}
