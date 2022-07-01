@@ -24,5 +24,21 @@ func RunHttp() {
 		appInfoGroup.GET("/getAll", controller.NewNumInfoControllerImpl().FindAll)
 		appInfoGroup.POST("/update", controller.NewNumInfoControllerImpl().Update)
 	}
+
+	roleInfo := r.Group("/role")
+	{
+		roleInfo.POST("/add/:key", controller.NewNumInfoControllerImpl().AddNumByKey)
+		roleInfo.GET("/findByKey/:key", controller.NewNumInfoControllerImpl().FindNumByKey)
+
+	}
+
+	userInfo := r.Group("/user")
+	{
+		userInfo.POST("/add/:key", controller.NewNumInfoControllerImpl().AddNumByKey)
+		userInfo.GET("/findByKey/:key", controller.NewNumInfoControllerImpl().FindNumByKey)
+		userInfo.GET("/findById/:id", controller.NewNumInfoControllerImpl().FindNumById)
+
+	}
+
 	r.Run("127.0.0.1:" + config.PORT)
 }
