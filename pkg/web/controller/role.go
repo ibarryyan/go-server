@@ -30,5 +30,4 @@ func (impl RoleControllerImpl) CreateRole(c *gin.Context) {
 	}
 	isOk := impl.dao.CreateRole(c, info)
 	c.JSON(200, map[string]interface{}{"code": 0, "msg": "", "count": 0, "data": isOk})
-
 }

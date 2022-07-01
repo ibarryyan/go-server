@@ -1,20 +1,23 @@
 package auth
 
 import (
-	"fmt"
 	"github.com/casbin/casbin/v2"
 	"github.com/casbin/casbin/v2/model"
-	adapter "github.com/casbin/xorm-adapter/v2"
+	a "github.com/casbin/xorm-adapter/v2"
 	"log"
 )
 
-func Main() {
-	// 使用 MySQL 数据库初始化一个 Xorm 适配器
-	a, err := adapter.NewAdapter("mysql", "root:12345@tcp(127.0.0.1:3306)/go_app", true)
+var (
+	enforcer *casbin.Enforcer
+	adapter  *a.Adapter
+)
+
+func init() {
+	var err error
+	adapter, err = a.NewAdapter("mysql", "root:12345@tcp(127.0.0.1:3306)/go_app", true)
 	if err != nil {
 		log.Fatalf("error: adapter: %s", err)
 	}
-
 	m, err := model.NewModelFromString(`
 		[request_definition]
 		r = sub, obj, act
@@ -31,16 +34,21 @@ func Main() {
 	if err != nil {
 		log.Fatalf("error: model: %s", err)
 	}
-
-	e, err := casbin.NewEnforcer(m, a)
+	enforcer, err = casbin.NewEnforcer(m, adapter)
 	if err != nil {
 		log.Fatalf("error: enforcer: %s", err)
 	}
+}
 
-	e.AddPolicy("sub", "resource", "write")
+func AddPolicy(role string, res string, action string) bool {
+	result, err := enforcer.AddPolicy(role, res, action)
+	if err != nil {
+		panic(err)
+	}
+	return result
+}
 
-	res, err := e.Enforce("sub", "resource", "write")
-
-	fmt.Println(res)
-
+func CheckEnforce(role string, res string, action string) bool {
+	result, _ := enforcer.Enforce(role, res, action)
+	return result
 }

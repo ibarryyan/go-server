@@ -14,30 +14,30 @@ func RunHttp() {
 	//解决跨域
 	r.Use(config.CorsConfig())
 	//路由组
-	appInfoGroup := r.Group("/")
+	num := r.Group("/num")
 	{
-		appInfoGroup.POST("/add/:key", controller.NewNumInfoControllerImpl().AddNumByKey)
-		appInfoGroup.GET("/findByKey/:key", controller.NewNumInfoControllerImpl().FindNumByKey)
-		appInfoGroup.GET("/findById/:id", controller.NewNumInfoControllerImpl().FindNumById)
-		appInfoGroup.POST("/saveInfo", controller.NewNumInfoControllerImpl().SaveNumInfo)
-		appInfoGroup.POST("/deleteInfo/:id", controller.NewNumInfoControllerImpl().DeleteById)
-		appInfoGroup.GET("/getAll", controller.NewNumInfoControllerImpl().FindAll)
-		appInfoGroup.POST("/update", controller.NewNumInfoControllerImpl().Update)
+		num.POST("/add/:key", controller.NewNumInfoControllerImpl().AddNumByKey)
+		num.GET("/findByKey/:key", controller.NewNumInfoControllerImpl().FindNumByKey)
+		num.GET("/findById/:id", controller.NewNumInfoControllerImpl().FindNumById)
+		num.POST("/saveInfo", controller.NewNumInfoControllerImpl().SaveNumInfo)
+		num.POST("/deleteInfo/:id", controller.NewNumInfoControllerImpl().DeleteById)
+		num.GET("/getAll", controller.NewNumInfoControllerImpl().FindAll)
+		num.POST("/update", controller.NewNumInfoControllerImpl().Update)
 	}
 
 	roleInfo := r.Group("/role")
 	{
-		roleInfo.POST("/add/:key", controller.NewNumInfoControllerImpl().AddNumByKey)
-		roleInfo.GET("/findByKey/:key", controller.NewNumInfoControllerImpl().FindNumByKey)
-
+		roleInfo.POST("/save", controller.NewRoleControllerImpl().CreateRole)
 	}
 
 	userInfo := r.Group("/user")
 	{
-		userInfo.POST("/add/:key", controller.NewNumInfoControllerImpl().AddNumByKey)
-		userInfo.GET("/findByKey/:key", controller.NewNumInfoControllerImpl().FindNumByKey)
-		userInfo.GET("/findById/:id", controller.NewNumInfoControllerImpl().FindNumById)
+		userInfo.POST("/save", controller.NewUserController().CreateUser)
+	}
 
+	auth := r.Group("/auth")
+	{
+		auth.POST("/add", controller.AddPolicy)
 	}
 
 	r.Run("127.0.0.1:" + config.PORT)
