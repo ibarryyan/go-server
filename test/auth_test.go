@@ -6,5 +6,5 @@ import (
 )
 
 func TestAuth(t *testing.T) {
-	auth.Main()
+	auth.DeletePolicy("1", "", "*")
 }

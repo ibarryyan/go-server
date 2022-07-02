@@ -4,6 +4,7 @@ import (
 	"github.com/casbin/casbin/v2"
 	"github.com/casbin/casbin/v2/model"
 	a "github.com/casbin/xorm-adapter/v2"
+	_ "github.com/go-sql-driver/mysql"
 	"log"
 )
 
@@ -50,5 +51,11 @@ func AddPolicy(role string, res string, action string) bool {
 
 func CheckEnforce(role string, res string, action string) bool {
 	result, _ := enforcer.Enforce(role, res, action)
+	return result
+}
+
+func DeletePolicy(role string, res string, action string) bool {
+
+	result, _ := enforcer.DeletePermissionForUser(role, action)
 	return result
 }
