@@ -3,6 +3,7 @@ package controller
 import (
 	"count_num/pkg/dao/impl"
 	"count_num/pkg/model"
+	"count_num/pkg/utils"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
@@ -14,6 +15,7 @@ type UserControllerImpl struct {
 
 type UserController interface {
 	CreateUser(c *gin.Context)
+	FindUserByLoginNameAndPwd(c *gin.Context)
 }
 
 func NewUserController() *UserControllerImpl {
@@ -30,4 +32,22 @@ func (impl UserControllerImpl) CreateUser(c *gin.Context) {
 	}
 	res := impl.dao.CreateUser(c, user)
 	c.JSON(200, map[string]interface{}{"code": 0, "msg": "", "count": 0, "data": res})
+}
+
+func (impl UserControllerImpl) FindUserByLoginNameAndPwd(c *gin.Context) {
+	body := c.Request.Body
+	bytes, err := ioutil.ReadAll(body)
+	user := model.User{}
+	json.Unmarshal(bytes, &user)
+	if err != nil {
+		panic(err)
+	}
+
+	userByLoginName := impl.dao.GetUserByLoginName(c, user.LoginName)
+	//密码通过
+	if userByLoginName.Pwd == utils.GetMd5Str(user.Pwd) {
+		c.JSON(200, map[string]interface{}{"code": 0, "msg": "", "count": 0, "data": utils.GetTokenStr()})
+	} else {
+		c.JSON(200, map[string]interface{}{"code": 0, "msg": "", "count": 0, "data": ""})
+	}
 }
