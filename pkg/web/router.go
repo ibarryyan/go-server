@@ -28,6 +28,7 @@ func RunHttp() {
 	roleInfo := r.Group("/role")
 	{
 		roleInfo.POST("/save", controller.NewRoleControllerImpl().CreateRole)
+		roleInfo.GET("/all", controller.NewRoleControllerImpl().GetAll)
 	}
 
 	userInfo := r.Group("/user")

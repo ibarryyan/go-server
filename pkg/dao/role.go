@@ -10,4 +10,6 @@ type RoleDao interface {
 	CreateRole(ctx context.Context, role model.Role) bool
 	//根据ID查看
 	GetRoleById(ctx context.Context, id int64) model.Role
+	//查看全部
+	GetAll(ctx context.Context) []model.Role
 }

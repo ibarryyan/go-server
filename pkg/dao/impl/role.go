@@ -32,3 +32,9 @@ func (impl *RoleDaoImpl) GetRoleById(ctx context.Context, id int64) model.Role {
 	impl.db.First(&role, "id", id)
 	return role
 }
+
+func (impl *RoleDaoImpl) GetAll(ctx context.Context) []model.Role {
+	roles := make([]model.Role, 0)
+	impl.db.Find(&roles)
+	return roles
+}

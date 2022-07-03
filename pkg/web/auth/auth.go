@@ -55,7 +55,6 @@ func CheckEnforce(role string, res string, action string) bool {
 }
 
 func DeletePolicy(role string, res string, action string) bool {
-
 	result, _ := enforcer.DeletePermissionForUser(role, action)
 	return result
 }

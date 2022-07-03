@@ -14,6 +14,7 @@ type RoleControllerImpl struct {
 
 type RoleController interface {
 	CreateRole(c *gin.Context)
+	GetAll(c *gin.Context)
 }
 
 func NewRoleControllerImpl() *RoleControllerImpl {
@@ -30,4 +31,9 @@ func (impl RoleControllerImpl) CreateRole(c *gin.Context) {
 	}
 	isOk := impl.dao.CreateRole(c, info)
 	c.JSON(200, map[string]interface{}{"code": 0, "msg": "", "count": 0, "data": isOk})
+}
+
+func (impl RoleControllerImpl) GetAll(c *gin.Context) {
+	roles := impl.dao.GetAll(c)
+	c.JSON(200, map[string]interface{}{"code": 0, "msg": "", "count": len(roles), "data": roles})
 }
