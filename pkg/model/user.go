@@ -28,3 +28,12 @@ func (user User) MarshalJSON() ([]byte, error) {
 		"create_time": user.CreateTime,
 	})
 }
+
+//Redis类似序列化操作
+func (user User) MarshalBinary() ([]byte, error) {
+	return json.Marshal(user)
+}
+
+func (user User) UnmarshalBinary(data []byte) error {
+	return json.Unmarshal(data, &user)
+}
