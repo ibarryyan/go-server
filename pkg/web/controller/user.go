@@ -46,8 +46,8 @@ func (impl UserControllerImpl) FindUserByLoginNameAndPwd(c *gin.Context) {
 	userByLoginName := impl.dao.GetUserByLoginName(c, user.LoginName)
 	//密码通过
 	if userByLoginName.Pwd == utils.GetMd5Str(user.Pwd) {
-		auth.SetToken(c, utils.GetTokenStr(), user)
-		c.JSON(200, map[string]interface{}{"code": 0, "msg": "", "count": 0, "data": utils.GetTokenStr()})
+		setToken := auth.SetToken(c, utils.GetTokenStr(), user)
+		c.JSON(200, map[string]interface{}{"code": 0, "msg": setToken, "count": 0, "data": utils.GetTokenStr()})
 	} else {
 		c.JSON(200, map[string]interface{}{"code": 0, "msg": "", "count": 0, "data": ""})
 	}
