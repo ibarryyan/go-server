@@ -4,7 +4,6 @@ import (
 	"context"
 	"count_num/pkg/config"
 	model2 "count_num/pkg/model"
-	"fmt"
 	"github.com/casbin/casbin/v2"
 	"github.com/casbin/casbin/v2/model"
 	a "github.com/casbin/xorm-adapter/v2"
@@ -37,7 +36,7 @@ func init() {
 		e = some(where (p.eft == allow))
 		
 		[matchers]
-		m = r.sub == p.sub && r.obj == p.obj && r.act == p.act || r.obj == *
+		m = r.sub == p.sub && r.obj == p.obj || p.obj == '*' 
 		`)
 	if err != nil {
 		log.Fatalf("error: model: %s", err)
@@ -58,7 +57,6 @@ func AddPolicy(role string, res string, action string) bool {
 
 func CheckEnforce(role string, res string, action string) bool {
 	result, _ := enforcer.Enforce(role, res, action)
-	fmt.Println(result)
 	return result
 }
 
