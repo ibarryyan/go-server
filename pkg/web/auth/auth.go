@@ -53,11 +53,10 @@ func init() {
 
 //自定义匹配函数
 //规则： (r.sub == p.sub && r.obj == p.obj) || (r.sub == p.sub && p.obj == '*')
-func KeyMatch(rsub, psub, robj, pobj string) bool {
-	return (rsub == psub && robj == pobj) || (rsub == psub && pobj == "*")
-}
-
 func KeyMatchFunc(args ...interface{}) (interface{}, error) {
+	KeyMatch := func(rsub, psub, robj, pobj string) bool {
+		return (rsub == psub && robj == pobj) || (rsub == psub && pobj == "*")
+	}
 	return (bool)(KeyMatch(args[0].(string), args[1].(string), args[2].(string), args[3].(string))), nil
 }
 
