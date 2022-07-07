@@ -4,7 +4,7 @@ import (
 	"context"
 	"count_num/pkg/cache"
 	"count_num/pkg/config"
-	"count_num/pkg/entity"
+	"count_num/pkg/model"
 	"gorm.io/gorm"
 	"time"
 )
@@ -20,8 +20,8 @@ func NewCountNumDAOImpl() *CountNumDAOImpl {
 	return &CountNumDAOImpl{db: config.DB, cache: cache.NewCountNumCacheDAOImpl()}
 }
 
-func (impl CountNumDAOImpl) AddNumInfo(ctx context.Context, info entity.NumInfo) bool {
-	var in entity.NumInfo
+func (impl CountNumDAOImpl) AddNumInfo(ctx context.Context, info model.NumInfo) bool {
+	var in model.NumInfo
 	impl.db.First(&in, "info_key", info.InfoKey)
 	if in.InfoKey == info.InfoKey { //去重
 		return false
@@ -31,14 +31,14 @@ func (impl CountNumDAOImpl) AddNumInfo(ctx context.Context, info entity.NumInfo)
 	return true
 }
 
-func (impl CountNumDAOImpl) GetNumInfoByKey(ctx context.Context, key string) entity.NumInfo {
-	var info entity.NumInfo
+func (impl CountNumDAOImpl) GetNumInfoByKey(ctx context.Context, key string) model.NumInfo {
+	var info model.NumInfo
 	impl.db.First(&info, "info_key", key)
 	return info
 }
 
-func (impl CountNumDAOImpl) FindAllNumInfo(ctx context.Context, page int, limit int) []entity.NumInfo {
-	var infos []entity.NumInfo
+func (impl CountNumDAOImpl) FindAllNumInfo(ctx context.Context, page int, limit int) []model.NumInfo {
+	var infos []model.NumInfo
 	if page <= 0 || limit <= 0 {
 		impl.db.Find(&infos)
 	} else {
@@ -47,19 +47,19 @@ func (impl CountNumDAOImpl) FindAllNumInfo(ctx context.Context, page int, limit 
 	return infos
 }
 
-func (impl CountNumDAOImpl) UpdateNumInfoByKey(ctx context.Context, info entity.NumInfo) bool {
-	impl.db.Model(&entity.NumInfo{}).Where("info_key = ?", info.InfoKey).Update("info_num", info.InfoNum)
+func (impl CountNumDAOImpl) UpdateNumInfoByKey(ctx context.Context, info model.NumInfo) bool {
+	impl.db.Model(&model.NumInfo{}).Where("info_key = ?", info.InfoKey).Update("info_num", info.InfoNum)
 	return true
 }
 
 func (impl CountNumDAOImpl) DeleteNumInfoById(ctx context.Context, id int64) bool {
-	impl.db.Delete(&entity.NumInfo{}, id)
-	impl.cache.SetNumInfo(ctx, string(id), entity.NumInfo{}, cacheTime)
+	impl.db.Delete(&model.NumInfo{}, id)
+	impl.cache.SetNumInfo(ctx, string(id), model.NumInfo{}, cacheTime)
 	return true
 }
 
-func (impl CountNumDAOImpl) GetNumInfoById(ctx context.Context, id int64) entity.NumInfo {
-	var info entity.NumInfo
+func (impl CountNumDAOImpl) GetNumInfoById(ctx context.Context, id int64) model.NumInfo {
+	var info model.NumInfo
 	numInfoById := impl.cache.GetNumInfoById(ctx, string(id))
 	if numInfoById.InfoKey != "" {
 		return numInfoById
@@ -68,8 +68,8 @@ func (impl CountNumDAOImpl) GetNumInfoById(ctx context.Context, id int64) entity
 	return info
 }
 
-func (impl CountNumDAOImpl) UpdateNumInfoById(ctx context.Context, info entity.NumInfo) bool {
-	impl.db.Model(&entity.NumInfo{}).Where("id", info.Id).Updates(entity.NumInfo{Name: info.Name, InfoKey: info.InfoKey, InfoNum: info.InfoNum})
+func (impl CountNumDAOImpl) UpdateNumInfoById(ctx context.Context, info model.NumInfo) bool {
+	impl.db.Model(&model.NumInfo{}).Where("id", info.Id).Updates(model.NumInfo{Name: info.Name, InfoKey: info.InfoKey, InfoNum: info.InfoNum})
 	impl.cache.SetNumInfo(ctx, string(info.Id), info, cacheTime)
 	return true
 }

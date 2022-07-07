@@ -3,7 +3,7 @@ package controller
 import (
 	"bytes"
 	"count_num/pkg/dao/impl"
-	"count_num/pkg/entity"
+	"count_num/pkg/model"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
@@ -46,7 +46,7 @@ func (impl NumInfoControllerImpl) FindNumByKey(c *gin.Context) {
 func (impl NumInfoControllerImpl) SaveNumInfo(c *gin.Context) {
 	body := c.Request.Body
 	bytes, err := ioutil.ReadAll(body)
-	info := entity.NumInfo{}
+	info := model.NumInfo{}
 	json.Unmarshal(bytes, &info)
 	if err != nil {
 		panic(err)
@@ -86,7 +86,7 @@ func (impl NumInfoControllerImpl) Update(c *gin.Context) {
 	if err != nil {
 		panic(err)
 	}
-	info := entity.NumInfo{
+	info := model.NumInfo{
 		Id:      cast.ToInt64(m["id"]),
 		Name:    m["name"],
 		InfoKey: m["info_key"],

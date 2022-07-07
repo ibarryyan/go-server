@@ -5,7 +5,7 @@ import (
 	"count_num/pkg/cache"
 	"count_num/pkg/config"
 	"count_num/pkg/dao/impl"
-	"count_num/pkg/entity"
+	"count_num/pkg/model"
 	"fmt"
 	"testing"
 	"time"
@@ -13,7 +13,7 @@ import (
 
 func TestCreate(t *testing.T) {
 	daoImpl := impl.NewCountNumDAOImpl()
-	info := entity.NumInfo{InfoNum: 22, InfoKey: "2", Name: "4"}
+	info := model.NumInfo{InfoNum: 22, InfoKey: "2", Name: "4"}
 	daoImpl.AddNumInfo(context.Background(), info)
 	fmt.Println(config.DB)
 }
@@ -26,7 +26,7 @@ func TestFindByKey(t *testing.T) {
 
 func TestUpdate(t *testing.T) {
 	daoImpl := impl.NewCountNumDAOImpl()
-	daoImpl.UpdateNumInfoByKey(context.Background(), entity.NumInfo{Id: 1, InfoKey: "ymx", InfoNum: 22121223})
+	daoImpl.UpdateNumInfoByKey(context.Background(), model.NumInfo{Id: 1, InfoKey: "ymx", InfoNum: 22121223})
 }
 
 func TestDelete(t *testing.T) {
@@ -35,7 +35,7 @@ func TestDelete(t *testing.T) {
 
 func TestCache(t *testing.T) {
 	cacheDAOImpl := cache.NewCountNumCacheDAOImpl()
-	cacheDAOImpl.SetNumInfo(context.Background(), "1", entity.NumInfo{1, "zs", "12", 2}, time.Second*1100)
+	cacheDAOImpl.SetNumInfo(context.Background(), "1", model.NumInfo{1, "zs", "12", 2}, time.Second*1100)
 	cacheDAOImpl.GetNumInfoById(context.Background(), "1")
 }
 

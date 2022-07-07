@@ -3,7 +3,7 @@ package impl
 import (
 	"context"
 	"count_num/pkg/dao/impl"
-	"count_num/pkg/entity"
+	"count_num/pkg/model"
 	"count_num/proto"
 	"encoding/json"
 )
@@ -21,7 +21,7 @@ func (impl *NumInfoRPCImpl) AddNumByKey(ctx context.Context, request *proto.Info
 	id := request.GetId()
 	name := request.GetName()
 	num := request.GetInfoNum()
-	impl.dao.UpdateNumInfoByKey(ctx, entity.NumInfo{
+	impl.dao.UpdateNumInfoByKey(ctx, model.NumInfo{
 		id,
 		name,
 		key,
@@ -42,7 +42,7 @@ func (impl *NumInfoRPCImpl) SaveNumInfo(ctx context.Context, request *proto.Info
 	id := request.GetId()
 	name := request.GetName()
 	num := request.GetInfoNum()
-	impl.dao.AddNumInfo(ctx, entity.NumInfo{
+	impl.dao.AddNumInfo(ctx, model.NumInfo{
 		id,
 		name,
 		key,
