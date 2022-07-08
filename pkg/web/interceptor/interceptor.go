@@ -10,6 +10,7 @@ var (
 	// 排除的URL,暂不支持 /*
 	Exclude = []string{
 		"/user/login",
+		"/user/register",
 	}
 )
 
@@ -25,7 +26,6 @@ func HttpInterceptor() gin.HandlerFunc {
 		}
 		token := c.GetHeader("token")
 		user := auth.GetToken(c, token)
-		//casbin
 		isPass := auth.CheckEnforce(cast.ToString(user.Role), c.Request.URL.String(), "")
 		if isPass {
 			c.Next()

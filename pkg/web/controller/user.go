@@ -17,6 +17,7 @@ type UserControllerImpl struct {
 type UserController interface {
 	CreateUser(c *gin.Context)
 	FindUserByLoginNameAndPwd(c *gin.Context)
+	Register(c *gin.Context)
 }
 
 func NewUserController() *UserControllerImpl {
@@ -49,6 +50,23 @@ func (impl UserControllerImpl) FindUserByLoginNameAndPwd(c *gin.Context) {
 		setToken := auth.SetToken(c, utils.GetTokenStr(), user)
 		c.JSON(200, map[string]interface{}{"code": 0, "msg": setToken, "count": 0, "data": utils.GetTokenStr()})
 	} else {
-		c.JSON(200, map[string]interface{}{"code": 0, "msg": "", "count": 0, "data": ""})
+		if userByLoginName.Id == 0 {
+			c.JSON(200, map[string]interface{}{"code": 0, "msg": "账号不存在", "count": 0, "data": "-1"})
+		} else {
+			c.JSON(200, map[string]interface{}{"code": 0, "msg": "密码错误", "count": 0, "data": "-1"})
+		}
 	}
+}
+
+func (impl UserControllerImpl) Register(c *gin.Context) {
+	body := c.Request.Body
+	bytes, err := ioutil.ReadAll(body)
+	user := model.User{}
+	json.Unmarshal(bytes, &user)
+	if err != nil {
+		panic(err)
+	}
+	user.Role = 1
+	res := impl.dao.CreateUser(c, user)
+	c.JSON(200, map[string]interface{}{"code": 0, "msg": "", "count": 0, "data": res})
 }

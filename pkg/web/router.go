@@ -35,6 +35,7 @@ func RunHttp() {
 	{
 		userInfo.POST("/save", controller.NewUserController().CreateUser)
 		userInfo.POST("/login", controller.NewUserController().FindUserByLoginNameAndPwd)
+		userInfo.POST("/register", controller.NewUserController().Register)
 	}
 
 	auth := r.Group("/auth")
