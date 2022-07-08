@@ -25,6 +25,7 @@ func (impl *UserDaoImpl) CreateUser(ctx context.Context, user model.User) bool {
 		return false
 	}
 	user.Pwd = utils.GetMd5Str(user.Pwd)
+	user.CreateTime = utils.NowTimeStr()
 	impl.db.Save(&user)
 	return true
 }

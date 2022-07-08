@@ -2,16 +2,15 @@ package model
 
 import (
 	"encoding/json"
-	"time"
 )
 
 type User struct {
-	Id         int64     `json:"id"`
-	Name       string    `json:"name"`
-	LoginName  string    `json:"login_name"`
-	Role       int64     `json:"role"`
-	Pwd        string    `json:"pwd"`
-	CreateTime time.Time `json:"create_time"`
+	Id         int64  `json:"id"`
+	Name       string `json:"name"`
+	LoginName  string `json:"login_name"`
+	Role       int64  `json:"role"`
+	Pwd        string `json:"pwd"`
+	CreateTime string `json:"create_time"`
 }
 
 func (user User) TableName() string {
