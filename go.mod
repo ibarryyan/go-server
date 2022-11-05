@@ -1,4 +1,4 @@
-module count_num
+module github.com/ibarryyan/count_num
 
 go 1.18
 
