@@ -1,4 +1,4 @@
-# count_num
+# go-server
 
 基于Go语言开发简单后端业务系统
 
